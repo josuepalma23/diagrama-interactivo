@@ -73,11 +73,6 @@ export default function DiagramaVennInteractvo() {
           touchAction: 'none'
         }}
     >
-      {/* 
-        CONTENEDOR RESPONSIVO:
-        - En Celulares (< 1024px): 'flex-col' (Círculos arriba, leyenda abajo, scroll si es necesario)
-        - En PC (>= 1024px): 'flex-row' (Diagrama izquierda, leyenda derecha tal como lo tenías)
-      */}
       <div 
         className={`flex flex-col lg:flex-row items-center justify-center w-full max-w-[1600px] h-full lg:h-auto px-4 lg:px-8 transition-all duration-700 ease-in-out ${pantallaCompleta ? 'opacity-0 scale-95 pointer-events-none absolute' : 'opacity-100 scale-100'}`}
       >
@@ -85,16 +80,9 @@ export default function DiagramaVennInteractvo() {
         {/* DIAGRAMA DE VENN */}
         <div className="w-full lg:w-[60%] flex items-center justify-center relative py-2 lg:py-0">
           
-          {/* Indicador visual animado (Solo icono, sin palabras) */}
-          <div className="absolute z-20 pointer-events-none animate-bounce bg-white/80 p-2.5 rounded-full shadow-lg border border-black/20 backdrop-blur-sm top-4 right-10 lg:right-24">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
-            </svg>
-          </div>
-
           <svg 
             viewBox="120 70 710 460" 
-            className="w-full max-w-[380px] lg:max-w-none lg:max-h-[80vh] drop-shadow-md"
+            className="w-full max-w-[380px] lg:max-w-none lg:max-h-[80vh] drop-shadow-md overflow-visible"
             xmlns="http://www.w3.org/2000/svg"
           >
             <defs>
@@ -114,6 +102,7 @@ export default function DiagramaVennInteractvo() {
               </clipPath>
             </defs>
 
+            {/* Círculo A (Izquierdo) */}
             <circle 
               cx="350" cy="300" r="220" 
               fill={datos.conjuntoA.color} 
@@ -121,6 +110,7 @@ export default function DiagramaVennInteractvo() {
               onClick={(e) => { e.stopPropagation(); handleClick('conjuntoA'); }}
             />
 
+            {/* Círculo B (Derecho) */}
             <circle 
               cx="600" cy="300" r="220" 
               fill={datos.conjuntoB.color} 
@@ -128,6 +118,7 @@ export default function DiagramaVennInteractvo() {
               onClick={(e) => { e.stopPropagation(); handleClick('conjuntoB'); }}
             />
 
+            {/* Intersección (Centro) */}
             <circle 
               cx="350" cy="300" r="220" 
               fill={datos.interseccion.color} 
@@ -138,10 +129,32 @@ export default function DiagramaVennInteractvo() {
 
             <circle cx="350" cy="300" r="220" fill="none" stroke="black" strokeWidth="5.5" className="pointer-events-none" />
             <circle cx="600" cy="300" r="220" fill="none" stroke="black" strokeWidth="5.5" className="pointer-events-none" />
+
+            {/* INDICADORES DE CLIC INCORPORADOS DENTRO DE CADA SUBJUNTO (SVG) */}
+            {/* 1. Indicador Subconjunto Izquierdo */}
+            <g className="pointer-events-none animate-bounce" transform="translate(250, 300)">
+              <circle cx="0" cy="0" r="18" fill="white" fillOpacity="0.85" stroke="black" strokeWidth="2" />
+              <path d="M-4 4 L4 -4 M-4 -4 L4 4" stroke="none" /> 
+              {/* Icono de Cursor de Click */}
+              <path d="M-3 -6 L3 2 L-1 3 L-3 7 Z" fill="black" transform="translate(-1, -1) scale(1.2)" />
+            </g>
+
+            {/* 2. Indicador Intersección (Centro) */}
+            <g className="pointer-events-none animate-bounce" transform="translate(475, 300)">
+              <circle cx="0" cy="0" r="18" fill="white" fillOpacity="0.85" stroke="black" strokeWidth="2" />
+              <path d="M-3 -6 L3 2 L-1 3 L-3 7 Z" fill="black" transform="translate(-1, -1) scale(1.2)" />
+            </g>
+
+            {/* 3. Indicador Subconjunto Derecho */}
+            <g className="pointer-events-none animate-bounce" transform="translate(700, 300)">
+              <circle cx="0" cy="0" r="18" fill="white" fillOpacity="0.85" stroke="black" strokeWidth="2" />
+              <path d="M-3 -6 L3 2 L-1 3 L-3 7 Z" fill="black" transform="translate(-1, -1) scale(1.2)" />
+            </g>
+
           </svg>
         </div>
 
-        {/* LEYENDA (Abajo en celular, Derecha en PC) */}
+        {/* LEYENDA */}
         <div className="w-full lg:w-[40%] flex flex-row lg:flex-col justify-center items-center lg:items-start gap-4 lg:space-y-10 lg:pl-12 mt-2 lg:mt-0 pb-6 lg:pb-0">
           
           <div 
