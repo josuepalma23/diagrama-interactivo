@@ -1,7 +1,7 @@
 import qrcode
 
 # Reemplaza esta URL con la que te dio Vercel
-url_proyecto = "https://diagrama-interactivo-xi.vercel.app/" 
+url_proyecto = "https://diagrama-interactivo-y37l.vercel.app/" 
 
 qr = qrcode.QRCode(
     version=1,

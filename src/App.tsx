@@ -73,127 +73,138 @@ export default function DiagramaVennInteractvo() {
           touchAction: 'none'
         }}
     >
+      {/* Contenedor Principal */}
       <div 
-        className={`flex flex-col lg:flex-row items-center justify-center w-full max-w-[1600px] h-full lg:h-auto px-4 lg:px-8 transition-all duration-700 ease-in-out ${pantallaCompleta ? 'opacity-0 scale-95 pointer-events-none absolute' : 'opacity-100 scale-100'}`}
+        className={`flex flex-col items-center justify-center w-full max-w-[1600px] h-full px-4 lg:px-8 transition-all duration-700 ease-in-out pt-4 pb-4 ${pantallaCompleta ? 'opacity-0 scale-95 pointer-events-none absolute' : 'opacity-100 scale-100'}`}
       >
         
-        {/* DIAGRAMA DE VENN CON INDICADORES VISIBLES */}
-        <div className="w-full lg:w-[60%] flex items-center justify-center py-2 lg:py-0">
-          <svg 
-            viewBox="120 70 710 460" 
-            className="w-full max-w-[380px] lg:max-w-none lg:max-h-[80vh] drop-shadow-md overflow-visible"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <defs>
-              <filter id="hover-bright" x="-20%" y="-20%" width="140%" height="140%">
-                 <feComponentTransfer>
-                    <feFuncR type="linear" slope="1.05"/>
-                    <feFuncG type="linear" slope="1.05"/>
-                    <feFuncB type="linear" slope="1.05"/>
-                  </feComponentTransfer>
-              </filter>
-              
-              <clipPath id="clipA">
-                <circle cx="350" cy="300" r="220" />
-              </clipPath>
-              <clipPath id="clipB">
-                <circle cx="600" cy="300" r="220" />
-              </clipPath>
-            </defs>
+        {/* TÍTULO PRINCIPAL (Centrado, negrita, Times New Roman) */}
+        <h1 className="text-2xl lg:text-4xl font-bold text-center text-black mb-2 lg:mb-6 tracking-wide flex-shrink-0">
+          Esquema del Estado del arte
+        </h1>
 
-            {/* Círculo A */}
-            <circle 
-              cx="350" cy="300" r="220" 
-              fill={datos.conjuntoA.color} 
-              className="cursor-pointer transition-all duration-200 hover:filter-[url(#hover-bright)]"
-              onClick={(e) => { e.stopPropagation(); handleClick('conjuntoA'); }}
-            />
-
-            {/* Círculo B */}
-            <circle 
-              cx="600" cy="300" r="220" 
-              fill={datos.conjuntoB.color} 
-              className="cursor-pointer transition-all duration-200 hover:filter-[url(#hover-bright)]"
-              onClick={(e) => { e.stopPropagation(); handleClick('conjuntoB'); }}
-            />
-
-            {/* Intersección */}
-            <circle 
-              cx="350" cy="300" r="220" 
-              fill={datos.interseccion.color} 
-              clipPath="url(#clipB)"
-              className="cursor-pointer transition-all duration-200 hover:filter-[url(#hover-bright)]"
-              onClick={(e) => { e.stopPropagation(); handleClick('interseccion'); }}
-            />
-
-            <circle cx="350" cy="300" r="220" fill="none" stroke="black" strokeWidth="5.5" className="pointer-events-none" />
-            <circle cx="600" cy="300" r="220" fill="none" stroke="black" strokeWidth="5.5" className="pointer-events-none" />
-
-            {/* INDICADORES VISIBLES EN CADA REGIÓN */}
-            <g className="pointer-events-none" transform="translate(260, 300)">
-              <circle cx="0" cy="0" r="16" fill="white" stroke="black" strokeWidth="2.5" />
-              <text x="0" y="6" textAnchor="middle" fontSize="18" fontWeight="bold" fill="black">+</text>
-            </g>
-
-            <g className="pointer-events-none" transform="translate(475, 300)">
-              <circle cx="0" cy="0" r="16" fill="white" stroke="black" strokeWidth="2.5" />
-              <text x="0" y="6" textAnchor="middle" fontSize="18" fontWeight="bold" fill="black">+</text>
-            </g>
-
-            <g className="pointer-events-none" transform="translate(690, 300)">
-              <circle cx="0" cy="0" r="16" fill="white" stroke="black" strokeWidth="2.5" />
-              <text x="0" y="6" textAnchor="middle" fontSize="18" fontWeight="bold" fill="black">+</text>
-            </g>
-
-          </svg>
-        </div>
-
-        {/* LEYENDA RESPONSIVA */}
-        <div className="w-full lg:w-[40%] flex flex-row lg:flex-col justify-center items-center lg:items-start gap-4 lg:space-y-8 lg:pl-12 mt-4 lg:mt-0 pb-6 lg:pb-0">
+        {/* CONTENEDOR INTERNO: Fila en PC, Columna en Celular */}
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full flex-grow">
           
-          <div 
-            className="flex flex-col lg:flex-row items-center lg:items-center space-y-1 lg:space-y-0 lg:space-x-6 cursor-pointer group text-center lg:text-left p-2 rounded-xl transition-all hover:bg-black/5 active:scale-95"
-            onClick={(e) => { e.stopPropagation(); handleClick('conjuntoA'); }}
-          >
-            <div 
-                className="w-10 h-8 lg:w-16 lg:h-12 flex-shrink-0 transition-transform group-hover:scale-110 shadow-sm" 
-                style={{ backgroundColor: datos.conjuntoA.color, border: '3.5px solid black' }}
-            ></div>
-            <span className="text-xs lg:text-3xl text-black leading-tight whitespace-pre-line group-hover:font-bold transition-all">
-              Filosofía de la{"\n"}tecnología
-            </span>
+          {/* DIAGRAMA DE VENN */}
+          <div className="w-full lg:w-[60%] flex items-center justify-center py-2 lg:py-0">
+            <svg 
+              viewBox="120 70 710 460" 
+              className="w-full max-w-[340px] lg:max-w-none lg:max-h-[72vh] drop-shadow-md overflow-visible"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <filter id="hover-bright" x="-20%" y="-20%" width="140%" height="140%">
+                   <feComponentTransfer>
+                      <feFuncR type="linear" slope="1.05"/>
+                      <feFuncG type="linear" slope="1.05"/>
+                      <feFuncB type="linear" slope="1.05"/>
+                    </feComponentTransfer>
+                </filter>
+                
+                <clipPath id="clipA">
+                  <circle cx="350" cy="300" r="220" />
+                </clipPath>
+                <clipPath id="clipB">
+                  <circle cx="600" cy="300" r="220" />
+                </clipPath>
+              </defs>
+
+              {/* Círculo A */}
+              <circle 
+                cx="350" cy="300" r="220" 
+                fill={datos.conjuntoA.color} 
+                className="cursor-pointer transition-all duration-200 hover:filter-[url(#hover-bright)]"
+                onClick={(e) => { e.stopPropagation(); handleClick('conjuntoA'); }}
+              />
+
+              {/* Círculo B */}
+              <circle 
+                cx="600" cy="300" r="220" 
+                fill={datos.conjuntoB.color} 
+                className="cursor-pointer transition-all duration-200 hover:filter-[url(#hover-bright)]"
+                onClick={(e) => { e.stopPropagation(); handleClick('conjuntoB'); }}
+              />
+
+              {/* Intersección */}
+              <circle 
+                cx="350" cy="300" r="220" 
+                fill={datos.interseccion.color} 
+                clipPath="url(#clipB)"
+                className="cursor-pointer transition-all duration-200 hover:filter-[url(#hover-bright)]"
+                onClick={(e) => { e.stopPropagation(); handleClick('interseccion'); }}
+              />
+
+              <circle cx="350" cy="300" r="220" fill="none" stroke="black" strokeWidth="5.5" className="pointer-events-none" />
+              <circle cx="600" cy="300" r="220" fill="none" stroke="black" strokeWidth="5.5" className="pointer-events-none" />
+
+              {/* INDICADORES VISIBLES EN CADA REGIÓN */}
+              <g className="pointer-events-none" transform="translate(260, 300)">
+                <circle cx="0" cy="0" r="16" fill="white" stroke="black" strokeWidth="2.5" />
+                <text x="0" y="6" textAnchor="middle" fontSize="18" fontWeight="bold" fill="black">+</text>
+              </g>
+
+              <g className="pointer-events-none" transform="translate(475, 300)">
+                <circle cx="0" cy="0" r="16" fill="white" stroke="black" strokeWidth="2.5" />
+                <text x="0" y="6" textAnchor="middle" fontSize="18" fontWeight="bold" fill="black">+</text>
+              </g>
+
+              <g className="pointer-events-none" transform="translate(690, 300)">
+                <circle cx="0" cy="0" r="16" fill="white" stroke="black" strokeWidth="2.5" />
+                <text x="0" y="6" textAnchor="middle" fontSize="18" fontWeight="bold" fill="black">+</text>
+              </g>
+
+            </svg>
           </div>
 
-          <div 
-             className="flex flex-col lg:flex-row items-center lg:items-center space-y-1 lg:space-y-0 lg:space-x-6 cursor-pointer group text-center lg:text-left p-2 rounded-xl transition-all hover:bg-black/5 active:scale-95"
-            onClick={(e) => { e.stopPropagation(); handleClick('conjuntoB'); }}
-          >
+          {/* LEYENDA */}
+          <div className="w-full lg:w-[40%] flex flex-row lg:flex-col justify-center items-center lg:items-start gap-4 lg:space-y-6 lg:pl-12 mt-2 lg:mt-0 pb-4 lg:pb-0">
+            
             <div 
-                className="w-10 h-8 lg:w-16 lg:h-12 flex-shrink-0 transition-transform group-hover:scale-110 shadow-sm" 
-                style={{ backgroundColor: datos.conjuntoB.color, border: '3.5px solid black' }}
-            ></div>
-            <span className="text-xs lg:text-3xl text-black leading-tight whitespace-pre-line group-hover:font-bold transition-all">
-              Teoría política de{"\n"}la tecnología
-            </span>
-          </div>
+              className="flex flex-col lg:flex-row items-center lg:items-center space-y-1 lg:space-y-0 lg:space-x-6 cursor-pointer group text-center lg:text-left p-2 rounded-xl transition-all hover:bg-black/5 active:scale-95"
+              onClick={(e) => { e.stopPropagation(); handleClick('conjuntoA'); }}
+            >
+              <div 
+                  className="w-8 h-6 lg:w-16 lg:h-12 flex-shrink-0 transition-transform group-hover:scale-110 shadow-sm" 
+                  style={{ backgroundColor: datos.conjuntoA.color, border: '3.5px solid black' }}
+              ></div>
+              <span className="text-[11px] lg:text-3xl text-black leading-tight whitespace-pre-line group-hover:font-bold transition-all">
+                Filosofía de la{"\n"}tecnología
+              </span>
+            </div>
 
-          <div 
-             className="flex flex-col lg:flex-row items-center lg:items-center space-y-1 lg:space-y-0 lg:space-x-6 cursor-pointer group text-center lg:text-left p-2 rounded-xl transition-all hover:bg-black/5 active:scale-95"
-            onClick={(e) => { e.stopPropagation(); handleClick('interseccion'); }}
-          >
             <div 
-                className="w-10 h-8 lg:w-16 lg:h-12 flex-shrink-0 transition-transform group-hover:scale-110 shadow-sm" 
-                style={{ backgroundColor: datos.interseccion.color, border: '3.5px solid black' }}
-            ></div>
-            <span className="text-xs lg:text-3xl text-black leading-tight whitespace-pre-line group-hover:font-bold transition-all">
-              Teoría política de las{"\n"}tecnodiversidades
-            </span>
-          </div>
+               className="flex flex-col lg:flex-row items-center lg:items-center space-y-1 lg:space-y-0 lg:space-x-6 cursor-pointer group text-center lg:text-left p-2 rounded-xl transition-all hover:bg-black/5 active:scale-95"
+              onClick={(e) => { e.stopPropagation(); handleClick('conjuntoB'); }}
+            >
+              <div 
+                  className="w-8 h-6 lg:w-16 lg:h-12 flex-shrink-0 transition-transform group-hover:scale-110 shadow-sm" 
+                  style={{ backgroundColor: datos.conjuntoB.color, border: '3.5px solid black' }}
+              ></div>
+              <span className="text-[11px] lg:text-3xl text-black leading-tight whitespace-pre-line group-hover:font-bold transition-all">
+                Teoría política de{"\n"}la tecnología
+              </span>
+            </div>
 
+            <div 
+               className="flex flex-col lg:flex-row items-center lg:items-center space-y-1 lg:space-y-0 lg:space-x-6 cursor-pointer group text-center lg:text-left p-2 rounded-xl transition-all hover:bg-black/5 active:scale-95"
+              onClick={(e) => { e.stopPropagation(); handleClick('interseccion'); }}
+            >
+              <div 
+                  className="w-8 h-6 lg:w-16 lg:h-12 flex-shrink-0 transition-transform group-hover:scale-110 shadow-sm" 
+                  style={{ backgroundColor: datos.interseccion.color, border: '3.5px solid black' }}
+              ></div>
+              <span className="text-[11px] lg:text-3xl text-black leading-tight whitespace-pre-line group-hover:font-bold transition-all">
+                Teoría política de las{"\n"}tecnodiversidades
+              </span>
+            </div>
+
+          </div>
         </div>
+
       </div>
 
-      {/* PANTALLA COMPLETA */}
+      {/* PANTALLA COMPLETA AL HACER CLICK */}
       <div 
         className={`absolute inset-0 flex flex-col items-center justify-center p-4 lg:p-8 transition-all duration-700 ease-in-out overflow-y-auto ${pantallaCompleta ? 'opacity-100 scale-100 pointer-events-auto' : 'opacity-0 scale-110 pointer-events-none'}`}
         onClick={handleReset}
