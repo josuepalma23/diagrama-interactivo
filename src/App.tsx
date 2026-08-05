@@ -1,6 +1,19 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-const datos = {
+interface SeccionData {
+  titulo: string;
+  color: string;
+  elementos: string[];
+}
+
+interface DatosEstructura {
+  conjuntoA: SeccionData;
+  conjuntoB: SeccionData;
+  interseccion: SeccionData;
+  [key: string]: SeccionData;
+}
+
+const datos: DatosEstructura = {
   conjuntoA: {
     titulo: "Filosofía de la tecnología",
     color: "#FFB3BA",
@@ -33,16 +46,16 @@ const datos = {
 };
 
 export default function DiagramaVennInteractvo() {
-  const [seccionActiva, setSeccionActiva] = useState(null);
-  const [pantallaCompleta, setPantallaCompleta] = useState(false);
+  const [seccionActiva, setSeccionActiva] = useState<string | null>(null);
+  const [pantallaCompleta, setPantallaCompleta] = useState<boolean>(false);
 
-  const handleClick = (seccion) => {
+  const handleClick = (seccion: string) => {
     setSeccionActiva(seccion);
     setPantallaCompleta(true);
   };
 
-  const handleReset = (e) => {
-    if(pantallaCompleta && e.target === e.currentTarget) {
+  const handleReset = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (pantallaCompleta && e.target === e.currentTarget) {
         setPantallaCompleta(false);
         setTimeout(() => {
           setSeccionActiva(null);
@@ -51,26 +64,20 @@ export default function DiagramaVennInteractvo() {
   };
 
   return (
-    // CONTENEDOR RAÍZ: Fijo a la pantalla, bloquea el scroll y el zoom táctil
     <div 
         className={`fixed inset-0 w-screen h-screen flex flex-col items-center justify-center overflow-hidden transition-colors duration-700 ease-in-out font-serif ${pantallaCompleta ? '' : 'bg-white'}`}
         onClick={handleReset}
         style={{ 
           fontFamily: 'Times New Roman, serif',
           backgroundColor: pantallaCompleta && seccionActiva ? datos[seccionActiva].color : 'white',
-          touchAction: 'none' // Evita que se haga zoom con los dedos en pantallas táctiles
+          touchAction: 'none'
         }}
     >
-      
-      {/* CONTENEDOR PRINCIPAL: Flexbox estricto centrado al medio de la pantalla */}
       <div 
         className={`flex flex-row items-center justify-center w-full max-w-[1600px] px-8 transition-all duration-700 ease-in-out ${pantallaCompleta ? 'opacity-0 scale-95 pointer-events-none absolute' : 'opacity-100 scale-100'}`}
       >
-        
-        {/* IZQUIERDA: Diagrama de Venn (60% del espacio) */}
         <div className="w-[60%] flex items-center justify-center">
           <svg 
-            // ViewBox ajustado milimétricamente para eliminar bordes muertos y hacer crecer los círculos
             viewBox="120 70 710 460" 
             className="w-full max-h-[85vh] drop-shadow-md"
             xmlns="http://www.w3.org/2000/svg"
@@ -119,9 +126,7 @@ export default function DiagramaVennInteractvo() {
           </svg>
         </div>
 
-        {/* DERECHA: Leyenda (40% del espacio) con tamaños proporcionales al diagrama */}
         <div className="w-[40%] flex flex-col justify-center space-y-12 pl-12">
-          
           <div 
             className="flex items-center space-x-6 cursor-pointer group"
             onClick={(e) => { e.stopPropagation(); handleClick('conjuntoA'); }}
@@ -160,11 +165,9 @@ export default function DiagramaVennInteractvo() {
               Teoría política de las{"\n"}tecnodiversidades
             </span>
           </div>
-
         </div>
       </div>
 
-      {/* PANTALLA COMPLETA AL HACER CLICK */}
       <div 
         className={`absolute inset-0 flex flex-col items-center justify-center p-8 transition-all duration-700 ease-in-out ${pantallaCompleta ? 'opacity-100 scale-100 pointer-events-auto' : 'opacity-0 scale-110 pointer-events-none'}`}
         onClick={handleReset}
@@ -190,7 +193,7 @@ export default function DiagramaVennInteractvo() {
             
             {datos[seccionActiva].elementos.length > 0 && (
               <ul className="text-3xl w-full mx-auto space-y-8 pl-4 md:pl-16 list-none mt-10 border-t-4 border-black/10 pt-10 text-left">
-                {datos[seccionActiva].elementos.map((item, index) => (
+                {datos[seccionActiva].elementos.map((item: string, index: number) => (
                   <li key={index} className="flex items-start group">
                     <span 
                       className="inline-block w-6 h-6 mt-3 mr-8 rounded-sm flex-shrink-0 shadow-md group-hover:scale-125 transition-transform"
@@ -204,7 +207,6 @@ export default function DiagramaVennInteractvo() {
           </div>
         )}
       </div>
-
     </div>
   );
 }
